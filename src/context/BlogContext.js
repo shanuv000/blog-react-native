@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer, useState } from "react";
 
 const BlogContext = createContext();
 export const BlogProvider = ({ children }) => {
@@ -10,12 +10,14 @@ export const BlogProvider = ({ children }) => {
   ];
 
   const addBlogPost = () => {
-    if (blogPost.length + 1 > 10) {
+    if (blogPost.length + 1 > 15) {
       return setBlogPost([...blogPost]);
     }
     setBlogPost([...blogPost, { title: `Blog Post #${blogPost.length + 1}` }]);
   };
 
+  const editBlogPost = () => {};
+  // const editBlogPost = () => {};
   return (
     <BlogContext.Provider value={{ data: blogPost, addBlogPost }}>
       {children}
