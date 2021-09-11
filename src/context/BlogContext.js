@@ -1,21 +1,28 @@
 import React, { createContext, useReducer, useState } from "react";
 
+const blogReducer = (state, action) => {
+  switch (action.type) {
+    case "add_BlogPost":
+      return [...state, { title: `Blog Post #${state.length + 1}` }];
+    default:
+      return state;
+  }
+};
+
 const BlogContext = createContext();
 export const BlogProvider = ({ children }) => {
-  const [blogPost, setBlogPost] = useState([]);
-  const BlogPost = [
-    { title: "Blog Post #1" },
-    { title: "Blog Post #2" },
-    { title: "Blog Post #3" },
-  ];
+  const [blogPost, dispatch] = useReducer(blogReducer, []);
+
+  // const addBlogPost = () => {
+  //   if (blogPost.length + 1 > 15) {
+  //     return setBlogPost([...blogPost]);
+  //   }
+  //   setBlogPost([...blogPost, { title: `Blog Post #${blogPost.length + 1}` }]);
+  // };
 
   const addBlogPost = () => {
-    if (blogPost.length + 1 > 15) {
-      return setBlogPost([...blogPost]);
-    }
-    setBlogPost([...blogPost, { title: `Blog Post #${blogPost.length + 1}` }]);
+    dispatch({ type: "add_BlogPost" });
   };
-
   const editBlogPost = () => {};
   // const editBlogPost = () => {};
   return (
